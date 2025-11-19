@@ -4,13 +4,14 @@ namespace ZarulZubir\Authify;
 
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
+use ZarulZubir\Authify\Enums\Message\Provider;
 
 class Authify
 {
     public function authenticate()
     {
         return Cache::remember('authify_bearer_token', 31536000, function () {
-            $response = Http::post(config('authify.url').'oauth/token', [
+            $response = Http::post(config('authify.url').'/oauth/token', [
                 'client_id' => config('authify.client_id'),
                 'client_secret' => config('authify.client_secret'),
                 'grant_type' => 'client_credentials',
@@ -20,7 +21,7 @@ class Authify
         });
     }
 
-    public function sendMessage($code, $text, $receiverNumber, $provider)
+    public function sendMessage($code, $text, $receiverNumber, $provider = Provider::WABA)
     {
         $response = Http::withToken($this->authenticate())
             ->post(config('authify.url').'/api/messages', [
