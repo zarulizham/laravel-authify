@@ -9,7 +9,7 @@ class Authify
 {
     public function authenticate()
     {
-        return Cache::remember('authify_bearer_token', 31536000, function ($q) {
+        return Cache::remember('authify_bearer_token', 31536000, function () {
             $response = Http::post(config('authify.url').'oauth/token', [
                 'client_id' => config('authify.client_id'),
                 'client_secret' => config('authify.client_secret'),
