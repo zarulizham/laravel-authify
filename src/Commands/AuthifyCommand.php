@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace ZarulZubir\Authify\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class AuthifyCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'laravel-authify';
 
     public $description = 'My command';
 
