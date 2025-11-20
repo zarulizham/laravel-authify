@@ -4,7 +4,6 @@ namespace ZarulZubir\Authify;
 
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
-use ZarulZubir\Authify\Enums\Message\Provider;
 
 class Authify
 {
@@ -21,14 +20,14 @@ class Authify
         });
     }
 
-    public function sendMessage($code, $text, $receiverNumber, $provider = Provider::WABA, $purpose = null)
+    public function sendMessage($code, $text, $receiverNumber, $provider = null, $purpose = null)
     {
         $response = Http::withToken($this->authenticate())
             ->post(config('authify.url').'/api/messages', [
                 'code' => $code,
                 'text' => $text,
                 'receiver_number' => $receiverNumber,
-                'provider' => $provider,
+                'provider' => $provider ?? config('authify.default_provider'),
                 'purpose' => $purpose,
             ]);
 
