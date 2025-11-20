@@ -21,7 +21,7 @@ class Authify
         });
     }
 
-    public function sendMessage($code, $text, $receiverNumber, $provider = Provider::WABA)
+    public function sendMessage($code, $text, $receiverNumber, $provider = Provider::WABA, $purpose = null)
     {
         $response = Http::withToken($this->authenticate())
             ->post(config('authify.url').'/api/messages', [
@@ -29,6 +29,7 @@ class Authify
                 'text' => $text,
                 'receiver_number' => $receiverNumber,
                 'provider' => $provider,
+                'purpose' => $purpose,
             ]);
 
         return $response->json();
