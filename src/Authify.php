@@ -23,6 +23,8 @@ class Authify
     public function sendMessage($code, $text, $receiverNumber, $provider = null, $purpose = null)
     {
         $response = Http::withToken($this->authenticate())
+            ->timeout(10)
+            ->retry(3, 1000)
             ->post(config('authify.url').'/api/messages', [
                 'code' => $code,
                 'text' => $text,
